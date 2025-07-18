@@ -41,8 +41,8 @@ const Sidebar = ({ sidebar, setSidebar }) => {
             <img src={user.imageUrl} className='w-8 rounded-full' alt="" />
             <div>
             <h1 className='text-sm font-medium'>{user.fullName}</h1>
-            <p classname='text-xs text-gray-500'>
-                <Protect plan='premium' fallback="Free">Premium</Protect>
+            <p classname='text-xs text-gray-300'>
+                <Protect classname='text-xs text-gray-300' plan='premium' fallback="Free">Premium </Protect>
                 Plan
                 </p>
             </div>
