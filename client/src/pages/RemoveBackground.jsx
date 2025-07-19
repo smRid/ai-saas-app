@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 const RemoveBackground = () => {
 
-    const [input, setInput] = useState('')
+    const [input, setInput] = useState(null)
     
       const onSubmitHandler = async (e)=>{
         e.preventDefault();
@@ -21,12 +21,17 @@ const RemoveBackground = () => {
 
         <input 
           onChange={(e)=>setInput(e.target.files[0])} 
-          value={input} 
           type="file" 
           accept="image/*"
           className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300 text-gray-600' 
           required
         />
+
+        {input && (
+          <p className='mt-2 text-xs text-gray-500'>
+            Selected file: {input.name}
+          </p>
+        )}
 
         <p className='text-xs text-gray-500 font-light mt-1'>Supports JPG, PNG and other image formats</p>
 
