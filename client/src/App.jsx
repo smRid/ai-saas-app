@@ -15,7 +15,7 @@ const App = () => {
  
   return (
     <div >
-      <Toaster / >
+      <Toaster />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/ai' element={<Layout />} >

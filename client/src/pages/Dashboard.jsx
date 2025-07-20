@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
-import { dummyCreationData } from '../assets/assets'
+import { useEffect, useState, useCallback } from 'react'
 import { Gem, Sparkles } from 'lucide-react'
 import { Protect, useAuth } from '@clerk/clerk-react'
 import CreationItem from '../components/CreationItem'
 import axios from "axios"
 import toast from 'react-hot-toast'
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000';
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const Dashboard = () => {
 
@@ -15,7 +14,7 @@ const Dashboard = () => {
 
       const { getToken } = useAuth()
 
-  const getDashboardData = async ()=>{
+  const getDashboardData = useCallback(async ()=>{
     try {
         const { data } = await axios.get('/api/user/get-user-creations', {
             headers : {Authorization: `Bearer ${await getToken()}`}
@@ -30,11 +29,11 @@ const Dashboard = () => {
         toast.error(error.message)
     }
     setLoading(false)
-}
+}, [getToken])
 
   useEffect(()=>{
     getDashboardData()
-  }, [])
+  }, [getDashboardData])
 
   return (
     <div className='h-full overflow-y-scroll p-6'>

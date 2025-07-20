@@ -1,11 +1,10 @@
 import { useAuth, useUser } from '@clerk/clerk-react'
-import React, { useEffect, useState } from 'react'
-import { dummyPublishedCreationData } from '../assets/assets'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Heart } from 'lucide-react'
 import axios from "axios"
 import toast from 'react-hot-toast'
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000';
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
   const Community = () => {
 
@@ -15,7 +14,7 @@ axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000
 
     const { getToken } = useAuth()
 
-    const fetchCreations = async ()=>{
+    const fetchCreations = useCallback(async ()=>{
         try {
             const {data} = await axios.get('/api/user/get-published-creations', {
                 headers : {Authorization: `Bearer ${await getToken()}`}
@@ -29,13 +28,13 @@ axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000
             toast.error(error.message)
         }
         setLoading(false)
-    }
+    }, [getToken])
 
     useEffect(()=>{
       if(user){
         fetchCreations()
       }
-    }, [user])
+    }, [user, fetchCreations])
 
     const imageLikeToggle = async (id)=>{
      try {
